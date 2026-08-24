@@ -6,7 +6,6 @@ import { ArrowRight, ChefHat, Flame, HeartHandshake, MapPin, Plus, Route, Sparkl
 import { Link } from "wouter";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import { StorefrontLayout, revealCompact, revealLeft, revealRight } from "@/components/Storefront";
 import { ASSETS, formatPKR, type MenuItem } from "@/data/menu";
 import { LOCAL_ASSETS } from "@/lib/assets";
@@ -118,7 +117,7 @@ function KitchenStory() {
 
 function PopularCard({ item }: { item: MenuItem }) {
   const { add } = useCart();
-  return <article className="popular-card"><Link href={`/product/${item.id}`} className="popular-card__image"><img src={item.image} alt={item.title} loading="lazy" decoding="async" />{item.badge && <span className="mini-badge">{item.badge}</span>}</Link><div className="popular-card__copy"><FavoriteButton menuItemId={item.id} title={item.title} /><h3>{item.title}</h3><p>{item.description}</p><div className="popular-card__bottom"><b>{formatPKR(item.price)}</b><button className="circle-add" onClick={() => { add(item); toast.success(`${item.title} added to your order`); }} aria-label={`Add ${item.title}`}><Plus size={21} /></button></div></div></article>;
+  return <article className="popular-card"><Link href={`/product/${item.id}`} className="popular-card__image"><img src={item.image} alt={item.title} loading="lazy" decoding="async" />{item.badge && <span className="mini-badge">{item.badge}</span>}</Link><div className="popular-card__copy"><FavoriteButton menuItemId={item.id} title={item.title} /><h3>{item.title}</h3><p>{item.description}</p><div className="popular-card__bottom"><b>{formatPKR(item.price)}</b><button className="circle-add" onClick={() => add(item)} aria-label={`Add ${item.title}`}><Plus size={21} /></button></div></div></article>;
 }
 
 export default function Home() {

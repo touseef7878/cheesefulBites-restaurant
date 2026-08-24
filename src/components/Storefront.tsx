@@ -39,6 +39,10 @@ export function BrandLockup({ compact = false }: { compact?: boolean }) {
 
 export function CartTrigger({ light = false }: { light?: boolean }) {
   const { count } = useCart();
+  const { user } = useAuth();
+
+  if (!user) return null;
+
   return (
     <Link href="/checkout" className={`cart-trigger ${light ? "cart-trigger--light" : ""}`} aria-label="Open your cart">
       <ShoppingBag size={24} strokeWidth={2.5} />

@@ -45,7 +45,7 @@ export default function Product() {
   }, [item.id]);
   useEffect(() => { void loadReviews(); }, [loadReviews]);
   const total = item.price * quantity + (extraCheese ? 50 * quantity : 0) + (spicyDip ? 30 * quantity : 0);
-  const addToOrder = () => { for (let i = 0; i < quantity; i += 1) add({ ...item, price: item.price + (extraCheese ? 50 : 0) + (spicyDip ? 30 : 0) }); toast.success(`${item.title} added to your order`); };
+  const addToOrder = () => { for (let i = 0; i < quantity; i += 1) add({ ...item, price: item.price + (extraCheese ? 50 : 0) + (spicyDip ? 30 : 0) }); };
   const sendReview = async () => {
     if (!user) { window.location.assign("/profile"); return; }
     if (comment.trim().length < 12) { toast.error("Please write at least 12 characters about your order."); return; }

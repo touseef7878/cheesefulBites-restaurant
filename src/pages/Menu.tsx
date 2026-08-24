@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Flame, Plus, Search, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
 import { StorefrontLayout, reveal } from "@/components/Storefront";
 import { ASSETS, categories, formatPKR, menuItems, type MenuCategory, type MenuItem } from "@/data/menu";
 import { useCart } from "@/contexts/CartContext";
@@ -15,11 +14,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 
 function AddButton({ item }: { item: MenuItem }) {
   const { add } = useCart();
-  const addToCart = () => {
-    add(item);
-    toast.success(`${item.title} added to your order`);
-  };
-  return <button className="circle-add" onClick={addToCart} aria-label={`Add ${item.title}`}><Plus size={23} /></button>;
+  return <button className="circle-add" onClick={() => add(item)} aria-label={`Add ${item.title}`}><Plus size={23} /></button>;
 }
 
 function MenuSlat({ item }: { item: MenuItem }) {
@@ -31,7 +26,7 @@ function MenuSlat({ item }: { item: MenuItem }) {
         <p>{item.description}</p>
         <div className="slat-options">
           {(item.variants ?? [{ label: "Regular", price: item.price }]).map((variant) => (
-            <button key={variant.label} onClick={() => { add({ ...item, price: variant.price }); toast.success(`${item.title} added to your order`); }}>
+            <button key={variant.label} onClick={() => { add({ ...item, price: variant.price }); }}>
               {variant.label} <b>{variant.price}</b>
             </button>
           ))}
@@ -44,7 +39,7 @@ function MenuSlat({ item }: { item: MenuItem }) {
 
 function WideAddButton({ item }: { item: MenuItem }) {
   const { add } = useCart();
-  return <button className="wide-add" onClick={() => { add(item); toast.success(`${item.title} added to your order`); }}>Add to Cart</button>;
+  return <button className="wide-add" onClick={() => add(item)}>Add to Cart</button>;
 }
 
 export default function Menu() {
@@ -149,7 +144,7 @@ function MenuCard({ item }: { item: MenuItem }) {
         <span>{formatPKR(item.price)}</span>
       </Link>
       <div className="menu-product-card__copy"><FavoriteButton menuItemId={item.id} title={item.title} className="favorite-button favorite-button--inline" /><h3>{item.title}</h3><p>{item.description}</p></div>
-      <button className="wide-add" onClick={() => { add(item); toast.success(`${item.title} added to your order`); }}>Add to Cart</button>
+      <button className="wide-add" onClick={() => add(item)}>Add to Cart</button>
     </article>
   );
 }

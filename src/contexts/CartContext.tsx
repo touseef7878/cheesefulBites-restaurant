@@ -93,6 +93,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...current, { ...item, quantity: 1 }];
     });
+    toast.success(`${item.title} added to your order`);
   };
 
   const changeQuantity = (id: string, delta: number) => {
