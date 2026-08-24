@@ -1,0 +1,10 @@
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/restaurant-assistant", "destination": "/api/restaurant-assistant" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,15 @@
+# Local dev server — not needed on Vercel (replaced by api/ serverless functions)
+server/
+
+# Local env — Vercel uses its own env var UI
+.env.local
+.env.*.local
+
+# Editor and OS
+.vscode/
+.idea/
+*.DS_Store
+
+# Docs
+docs/
+README.md
