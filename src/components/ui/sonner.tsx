@@ -9,6 +9,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
       duration={2500}
+      position="bottom-left"
       style={
         {
           "--normal-bg": "#1c1b1b",

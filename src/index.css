@@ -382,6 +382,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .payment-card > button + button { margin-top: .65rem; }
 .payment-card > button svg { margin-left: auto; }
 .payment-card > button.is-selected { border-color: var(--ink); background: var(--cheddar); color: var(--ink); font-weight: 800; }
+.payment-cash-only { display: flex; width: 100%; align-items: center; gap: .55rem; border: 2px solid var(--ink); border-radius: .65rem; background: var(--cheddar); padding: .9rem; color: var(--ink); font-weight: 800; }
+.payment-cash-only svg { margin-left: auto; }
 .order-summary { display: flex; flex-direction: column; gap: 1.15rem; border: var(--line) solid var(--ink); border-radius: var(--radius-card); background: linear-gradient(135deg, var(--orange-bright), var(--orange)); padding: 27px; color: #fff; box-shadow: var(--shadow); }
 .order-summary h2 { border-bottom: 2px solid var(--ink); padding-bottom: .8rem; }
 .order-summary > div { display: grid; gap: .65rem; }

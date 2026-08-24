@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const port = Number(process.env.ASSISTANT_PORT || process.env.PORT || 8787);
+const port = Number(process.env.ASSISTANT_PORT || process.env.PORT || 3001);
 const maxMessageLength = 700;
 const restaurantTerms = ["cheeseful", "bite", "menu", "food", "order", "price", "rs", "rupee", "delivery", "pickup", "location", "address", "wah", "phone", "call", "whatsapp", "hour", "time", "open", "close", "paratha", "shawarma", "wrap", "wing", "strip", "drink", "cola", "onion", "cheese", "crispy", "zinger", "review", "rating", "favourite", "favorite", "account", "sign in", "sign up", "profile", "availability", "available", "owner", "restaurant", "contact"];
 const greetingPattern = /^(hi|hello|hey|assalam(?:ualaikum| o alaikum)|salam|thanks|thank you)[!.,\s]*$/i;

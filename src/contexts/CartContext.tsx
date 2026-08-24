@@ -1,8 +1,9 @@
 /**
  * Cheeseful Bites visual system: tactile, transparent local cart behavior for the
  * playful Cheesy Maximalism ordering interface; no checkout is processed online.
+ * Cart lines are persisted to localStorage keyed by user ID so they survive a refresh.
  */
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, useRef, type ReactNode } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import type { MenuItem } from "@/data/menu";
@@ -21,10 +22,60 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+function storageKey(userId: string) {
+  return `cheeseful-cart-${userId}`;
+}
+
+function loadCart(userId: string): CartLine[] {
+  try {
+    const raw = localStorage.getItem(storageKey(userId));
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed as CartLine[];
+  } catch {
+    return [];
+  }
+}
+
+function saveCart(userId: string, lines: CartLine[]) {
+  try {
+    localStorage.setItem(storageKey(userId), JSON.stringify(lines));
+  } catch {
+    // localStorage quota exceeded — silent fail
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>([]);
   const { user } = useSupabaseAuth();
   const [, setLocation] = useLocation();
+
+  // Start with empty cart; we'll load from localStorage once we know the user
+  const [lines, setLines] = useState<CartLine[]>([]);
+
+  // Track previous user ID so we can detect user switches
+  const prevUserIdRef = useRef<string | null>(null);
+
+  // Load persisted cart whenever the logged-in user changes
+  useEffect(() => {
+    const userId = user?.id ?? null;
+    if (userId === prevUserIdRef.current) return; // same user, no reload needed
+    prevUserIdRef.current = userId;
+
+    if (userId) {
+      setLines(loadCart(userId));
+    } else {
+      // User signed out — clear in-memory cart
+      setLines([]);
+    }
+  }, [user?.id]);
+
+  // Persist to localStorage on every change (only when a user is signed in)
+  useEffect(() => {
+    if (user?.id) {
+      saveCart(user.id, lines);
+    }
+  }, [lines, user?.id]);
 
   const add = (item: MenuItem) => {
     if (!user) {
@@ -74,4 +125,3 @@ export function useCart() {
   if (!value) throw new Error("useCart must be used inside CartProvider");
   return value;
 }
-
