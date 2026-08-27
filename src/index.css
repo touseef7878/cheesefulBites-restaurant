@@ -20,6 +20,13 @@
   --color-card-foreground: var(--ink);
   --color-border: var(--ink);
   --color-ring: var(--cheddar);
+  /* Sidebar colour tokens — must be defined so bg-sidebar / text-sidebar-foreground etc. resolve */
+  --color-sidebar: var(--cream);
+  --color-sidebar-foreground: var(--ink);
+  --color-sidebar-accent: var(--mist);
+  --color-sidebar-accent-foreground: var(--ink);
+  --color-sidebar-border: var(--ink);
+  --color-sidebar-ring: var(--cheddar);
 }
 
 :root {
